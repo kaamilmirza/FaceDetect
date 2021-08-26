@@ -6,6 +6,8 @@ import "./Components/Imagelinkform/ImageLinkForm.css"
 import "./index.js"; 
 import ImageLinkForm from "./Components/Imagelinkform/ImageLinkForm";
 import Rank from "./Components/Rank/Rank";
+import Particles from 'react-particles-js';
+import { tsParticles  } from "tsparticles";
 
 function App() {
   return (
@@ -14,6 +16,7 @@ function App() {
        <Logo/>
        <ImageLinkForm/>
        <Rank/>
+       <Particles/>
       {/*
       
       <FaceRecognittion/>*/
