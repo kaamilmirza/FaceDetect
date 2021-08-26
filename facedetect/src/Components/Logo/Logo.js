@@ -4,10 +4,10 @@ import './logo.css';
 import brain from './icons8-brain-50.png';
 const Logo = () =>{
     return(
-        <div className= "ma4 mt0" >
-            <Tilt className="Tilt br2 shadow-2" options={{ max : 25 }} style={{ height: 250, width: 250 }} >
-                <div className="Tilt-inner "  >
-                    <img  alt="Logo" src ={brain} /> 
+        <div className= "ma4 mt0 center" >
+            <Tilt className="Tilt br2 shadow-3" options={{ max : 25 }} style={{ height: 150, width: 150 }} >
+                <div className="Tilt-inner">
+                    <img style ={{paddingTop : '40px'}} alt="Logo" src ={brain}/> 
                     </div>
             </Tilt>
             
