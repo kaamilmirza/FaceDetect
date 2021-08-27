@@ -7,16 +7,39 @@ import "./index.js";
 import ImageLinkForm from "./Components/Imagelinkform/ImageLinkForm";
 import Rank from "./Components/Rank/Rank";
 import Particles from 'react-particles-js';
-import { tsParticles  } from "tsparticles";
+
+const ParticlesOptions = {
+  "particles": { 
+      "number": {
+          "value": 100
+      },
+      "size": {
+          "value": 3 
+      },
+      "density":{
+          "enable" : true,
+          "value_area" : 700
+      }
+  },
+  "interactivity": {
+      "events": {
+          "onhover": {
+              "enable": true,
+              "mode": "repulse"
+          }
+      }
+  }
+}
 
 function App() {
   return (
     <div className="App">
+       <Particles className ='particles'
+        params = {ParticlesOptions}/>
        <Navigation/>
        <Logo/>
        <ImageLinkForm/>
        <Rank/>
-       <Particles/>
       {/*
       
       <FaceRecognittion/>*/

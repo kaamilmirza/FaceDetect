@@ -7,7 +7,7 @@ import './index.css';
 ReactDOM.render(
   <React.StrictMode>
     <App/>
-
+    <script src="https://cdn.rawgit.com/progers/pathseg/master/pathseg.js"></script>
   </React.StrictMode>,
   document.getElementById('root')
 );

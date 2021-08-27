@@ -11,3 +11,7 @@
     flex-direction: row;
     justify-content: space-between;
 }
+
+.zaxis{
+    z-index: 2;
+}
