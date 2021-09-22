@@ -4,10 +4,9 @@ const FaceRecognition = ({imageUrl, box}) =>{
     return(
         <div className = 'center na'>
         <div className ='absolute mt2'>
-            <img id = 'inputimage' src= {imageUrl} alt= 'Prediction' height ='auto'>
-            <div className = 'bouding-box' style ={{top:box.topRow, right: box.rightCol, bottom : box.bottomRow , left: box.leftCol}}>
+            <img id = 'inputimage' src= {imageUrl} alt= 'Prediction' height ='auto'/>
+              <div className = 'bouding-box' style ={{top:box.topRow, right: box.rightCol, bottom : box.bottomRow , left: box.leftCol}}>
             </div>
-             </img>
             
             </div>
             
