@@ -9,6 +9,7 @@ import ImageLinkForm from "./Components/Imagelinkform/ImageLinkForm";
 import Rank from "./Components/Rank/Rank";
 import Particles from 'react-particles-js';
 import FaceRecognition from './Components/FaceRecognition/FaceRecognition';
+import Signin from "./Components/Signin/Signin";
 
 const app = new Clarifai.App({
   apiKey : 'c45424fb6f73418c939cc9b7fd260bb3'
@@ -83,6 +84,7 @@ displayFaceBox = (box) =>{
        <Particles className ='particles'
         params = {ParticlesOptions}/>
        <Navigation/>
+       <Signin style/>
        <Logo/>
        <ImageLinkForm onInputChange ={this.onInputChange} 
        onButtonSubmit = {this.onButtonSubmit}/>
