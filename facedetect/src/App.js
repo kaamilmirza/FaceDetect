@@ -27,6 +27,7 @@ const ParticlesOptions = {
           "enable" : true,
           "value_area" : 700
       }
+    
   },
   "interactivity": {
       "events": {
@@ -44,25 +45,37 @@ class App extends Component {
     this.state ={
       input : '',
       imageUrl: '',
+      box : {},
     }
   }
 
+  calculateFaceL = (facedata) =>{
+      const clarifaiFace = facedata.outputs[0].data.regions[0].region_info.bounding_box;
+      const image = document.getElementById('inputimage');
+      const width = Number(image.width);
+      const height = Number(image.height);
+      return{
+        leftCol: clarifaiFace.left_col * width,
+        topRow : clarifaiFace.top_row * height,
+        rightCol : width - (clarifaiFace.right_col * width),
+        bottomRow :height - (clarifaiFace.bottom_row) * height,
+  }
+}
+
+displayFaceBox = (box) =>{
+  this.setState({box:box})
+  console.log(box);
+}
   onInputChange = (event) =>{
     this.setState({input: event.target.value});
   }
 
   onButtonSubmit = () =>{
-    console.log('Click');
-    this.setState({imageUrl:this.state.input})
-    app.models.predict('f76196b43bbd45c99b4f3cd8e8b40a8a', 'https://upload.wikimedia.org/wikipedia/commons/a/ad/Angelina_Jolie_2_June_2014_%28cropped%29.jpg').then(
-      function(response){
-        console.log(response);
-      },
-      function(err){
-
-      }
-    );
-    
+    this.setState({imageUrl:this.state.input});
+    app.models.predict('f76196b43bbd45c99b4f3cd8e8b40a8a', this.state.input).then(
+      response =>
+        this.displayFaceBox(this.calculateFaceL(response)))
+        .catch(err => console.log(err));
   }
   render(){
   return (
@@ -74,7 +87,8 @@ class App extends Component {
        <ImageLinkForm onInputChange ={this.onInputChange} 
        onButtonSubmit = {this.onButtonSubmit}/>
        <Rank/>
-      <FaceRecognition imageUrl={this.state.imageUrl}/> 
+      <FaceRecognition box={this.state.box} imageUrl={this.state.imageUrl}
+      /> 
       </div>
     );
     }
