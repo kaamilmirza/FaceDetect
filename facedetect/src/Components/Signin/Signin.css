@@ -1,3 +1,4 @@
 .zaxis{
-    z-index: 9;
+    position: relative;
+    z-index: 5;
 }

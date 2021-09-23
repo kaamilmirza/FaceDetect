@@ -47,6 +47,7 @@ class App extends Component {
       input : '',
       imageUrl: '',
       box : {},
+      route: 'signin'
     }
   }
 
@@ -68,7 +69,7 @@ displayFaceBox = (box) =>{
   console.log(box);
 }
   onInputChange = (event) =>{
-    this.setState({input: event.target.value});
+    this.setState({input: event.target.valmue});
   }
 
   onButtonSubmit = () =>{
@@ -78,20 +79,31 @@ displayFaceBox = (box) =>{
         this.displayFaceBox(this.calculateFaceL(response)))
         .catch(err => console.log(err));
   }
+  onRouteChange=() =>{
+    this.setState({route :'home'});
+  }
+
   render(){
   return (
     <div className="App">
        <Particles className ='particles'
         params = {ParticlesOptions}/>
        <Navigation/>
-       <Signin style/>
-       <Logo/>
+       {
+        this.state.route === 'signin' 
+        ? <Signin onRouteChange={this.onRouteChange}/>
+        :
+          <div>
+         <Logo/>
        <ImageLinkForm onInputChange ={this.onInputChange} 
        onButtonSubmit = {this.onButtonSubmit}/>
        <Rank/>
       <FaceRecognition box={this.state.box} imageUrl={this.state.imageUrl}
       /> 
       </div>
+        }
+      </div>
+  
     );
     }
 }
