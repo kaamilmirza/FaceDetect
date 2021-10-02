@@ -4,7 +4,7 @@ const ImageLinkForm = ({ onInputChange ,onButtonSubmit}) =>{
     return(
         <div>
             <div className ='pa4 br4 shadow-5 form center ma4 mt0 center' style = {{background: 'white' }} >
-            <p classname ='f3 '>
+            <p className ='f3 '>
                 {'This app will detect faces in your pictures'}
             </p>
                 <div className = 'space zaxis '>

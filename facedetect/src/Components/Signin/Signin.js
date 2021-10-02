@@ -1,5 +1,11 @@
 import React from 'react';
 import './Signin.css';
+
+try {
+  
+} catch (error) {
+  
+}
 class Signin extends React.Component{
   constructor(props){
     super(props);
@@ -14,17 +20,34 @@ class Signin extends React.Component{
   onPasswordChange = (event)=>{
     this.setState({SignInPassword : event.target.value})
   }
-  onSubmitSignIn = () =>{
-    fetch('http://localhost:3000/signin',{
+
+  
+
+   onSubmitSignIn = async event =>{
+     event.preventDefault();
+     try{
+     await fetch('http://localhost:3000/signin',{
       method: 'post',
-      header: {'Content-Type' : 'application/json'},
+      headers: {'Content-Type' : 'application/json',
+      
+    },
       body : JSON.stringify({
         email : this.state.SignInEmail,
         password : this.state.SignInPassword
       })
-    })
-    this.props.onRouteChange('home');
-  }
+  
+    }).then(response => response.json())
+      .then(data => {
+        if(data === "success"){
+          this.props.onRouteChange('home');
+        }
+      })
+    }
+    catch(error){
+      console.log(error);
+    }
+   }
+  
     render(){
       const  { onRouteChange } = this.props;
       return(
@@ -34,11 +57,11 @@ class Signin extends React.Component{
             <fieldset id="sign_up" className="ba b--transparent ph0 mh0">
               <legend className="f3 fw6 ph0 mh0 center">Face Detect</legend>
               <div className="mt3">
-                <label className="db fw6 lh-copy f6" htmlFor="email-address">Email</label>
+                <label className="db fw6 lh-copy f6" htmlFor="email">Email</label>
                 <input 
                 onChange = {this.onEmailChange}
                 className="pa2 input-reset ba bg-transparent hover-bg-black hover-white w-100" 
-                type="email" name="email-address"  id="email-address"/>
+                type="email" name="emails"  id="email"/>
               </div>
               <div className="mv3">
                 <label className="db fw6 lh-copy f6" htmlFor="password">Password</label>
