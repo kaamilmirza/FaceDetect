@@ -137,7 +137,22 @@ class App extends Component {
       box : {},
       route: 'signin',
       issignedin : false,
+      user: {
+        email : '',
+        id : '',
+        entries : 0,
+        joined : ''
+      }
     }
+  }
+  loadUser = (data) =>{
+    this.setState({user: {
+      id: data.id,
+      name : data.name,
+      email : data.email,
+      entries : data.entries,
+      joined: data.joined,
+    }})
   }
 
 
@@ -156,19 +171,41 @@ class App extends Component {
 
 displayFaceBox = (box) =>{
   this.setState({box:box})
-  console.log(box);
 }
   onInputChange = (event) =>{
-    this.setState({input: event.target.valmue});
+    this.setState({input: event.target.value});
   }
 
   onButtonSubmit = () =>{
     this.setState({imageUrl:this.state.input});
-    app.models.predict('f76196b43bbd45c99b4f3cd8e8b40a8a', this.state.input).then(
-      response =>
-        this.displayFaceBox(this.calculateFaceL(response)))
-        .catch(err => console.log(err));
-  }
+    app.models.predict(
+      'f76196b43bbd45c99b4f3cd8e8b40a8a', this.state.input)
+    .then(response =>{
+        if(response){
+          fetch('http://localhost:3000/image',
+          {
+            method : 'put',
+            headers: {'Content-Type' : 'application/json'},
+            body : JSON.stringify({
+              id : this.state.user.id
+            })
+            
+          })
+         
+        }
+        this.displayFaceBox(this.calculateFaceL(response))
+        .catch(err => console.log(err))
+      }) .then(response => response.json())
+         .then(count=>{
+           this.setState({users: {
+             entries : count
+           }})
+         } )
+
+      }
+    
+
+  
   onRouteChange=(route) =>{
     if(route === 'signout'){
       this.setState({issignedin : false})
@@ -191,18 +228,21 @@ displayFaceBox = (box) =>{
          route === 'home' 
         ? <div>
        <Logo/>
+       <Rank
+        loadUser={this.loadUser} onRouteChange={this.onRouteChange}
+       />
        <ImageLinkForm onInputChange ={this.onInputChange} 
        onButtonSubmit = {this.onButtonSubmit}/>
-       <Rank/>
-      <FaceRecognition box={box} imageUrl={imageUrl}
-      /> 
+        <FaceRecognition box={box} imageUrl={imageUrl}
+      />
+       
       </div>
         :
       (
         route === 'signin'
-        ?<Signin onRouteChange={this.onRouteChange}/>
+        ?<Signin loadUser={this.loadUser} onRouteChange={this.onRouteChange}/>
         : 
-        <Register onRouteChange={this.onRouteChange}/>
+        <Register loadUser={this.loadUser} onRouteChange={this.onRouteChange}/>
       )
         }
       </div>

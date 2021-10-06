@@ -1,11 +1,6 @@
 import React from 'react';
 import './Signin.css';
 
-try {
-  
-} catch (error) {
-  
-}
 class Signin extends React.Component{
   constructor(props){
     super(props);
