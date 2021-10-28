@@ -139,6 +139,7 @@ class App extends Component {
       issignedin : false,
       user: {
         email : '',
+        password: '',
         id : '',
         entries : 0,
         joined : ''
@@ -178,8 +179,7 @@ displayFaceBox = (box) =>{
 
   onButtonSubmit = () =>{
     this.setState({imageUrl:this.state.input});
-    app.models.predict(
-      'f76196b43bbd45c99b4f3cd8e8b40a8a', this.state.input)
+    app.models.predict('f76196b43bbd45c99b4f3cd8e8b40a8a', this.state.input)
     .then(response =>{
         if(response){
           fetch('http://localhost:3000/image',
@@ -190,18 +190,15 @@ displayFaceBox = (box) =>{
               id : this.state.user.id
             })
             
-          })
+          }).then(response => response.json())
+          .then(count=>{
+            this.setState(Object.assign(this.state.user,{entries:count}))
+          } )
          
         }
         this.displayFaceBox(this.calculateFaceL(response))
-        .catch(err => console.log(err))
-      }) .then(response => response.json())
-         .then(count=>{
-           this.setState({users: {
-             entries : count
-           }})
-         } )
-
+      }) 
+        .catch(err=>console.log(err));
       }
     
 
@@ -229,7 +226,8 @@ displayFaceBox = (box) =>{
         ? <div>
        <Logo/>
        <Rank
-        loadUser={this.loadUser} onRouteChange={this.onRouteChange}
+          name={this.state.user.name}
+          entries={this.state.user.entries}
        />
        <ImageLinkForm onInputChange ={this.onInputChange} 
        onButtonSubmit = {this.onButtonSubmit}/>
