@@ -128,6 +128,22 @@ const ParticlesOptions = {
   "retina_detect": true
 }
 
+const initialState = {
+  input : '',
+  imageUrl: '',
+  box : {},
+  route: 'signin',
+  issignedin : false,
+  user: {
+    email : '',
+    password: '',
+    id : '',
+    entries : 0,
+    joined : ''
+    }
+}
+
+
 class App extends Component {
   constructor(){
     super();
@@ -183,7 +199,7 @@ displayFaceBox = (box) =>{
     app.models.predict('f76196b43bbd45c99b4f3cd8e8b40a8a', this.state.input)
     .then(response =>{
         if(response){
-          fetch('http://localhost:3000/image',
+          fetch('https://sheltered-fortress-46434.herokuapp.com/image',
           {
             method : 'put',
             headers: {'Content-Type' : 'application/json'},
@@ -195,6 +211,7 @@ displayFaceBox = (box) =>{
           .then(count=>{
             this.setState(Object.assign(this.state.user,{entries:count}))
           } )
+          .catch(console.log)
          
         }
         this.displayFaceBox(this.calculateFaceL(response))
@@ -206,7 +223,8 @@ displayFaceBox = (box) =>{
   
   onRouteChange=(route) =>{
     if(route === 'signout'){
-      this.setState({issignedin : false})
+
+      this.setState(initialState)
     }
     else if(route === 'home'){
     this.setState({issignedin : true})
